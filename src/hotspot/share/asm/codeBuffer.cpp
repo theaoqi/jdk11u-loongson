@@ -351,9 +351,7 @@ void CodeSection::relocate(address at, RelocationHolder const& spec, int format)
     assert(rtype == relocInfo::none              ||
            rtype == relocInfo::runtime_call_type ||
            rtype == relocInfo::internal_word_type||
-#ifdef MIPS
-           rtype == relocInfo::internal_pc_type  ||
-#endif
+           NOT_ZERO(MIPS64_ONLY(rtype == relocInfo::internal_pc_type ||))
            rtype == relocInfo::section_word_type ||
            rtype == relocInfo::external_word_type,
            "code needs relocation information");
